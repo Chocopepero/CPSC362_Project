@@ -12,7 +12,7 @@ public:
       : _street{other._street}, _city{other._city}, _state{other._state},
         _postal_code{other._postal_code}, _country{other._country} {}
 
-  bool ChangeAddress(Address new_address) {
+  bool change_Address(Address new_address) {
     _street = new_address._street,
     _city = new_address._city,
     _state = new_address._state,

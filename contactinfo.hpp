@@ -12,24 +12,29 @@ public:
       : _name{name}, _phone_number{phone_number},
         _address(street, city, state, postal_code, country) {}
 
-  bool UpdateName(const std::string& name) {
+  bool updateName(const std::string &name) {
     _name = name;
     return _name == name;
   }
-  bool UpdatePhoneNumber(const std::string &phone_number) {
+  bool updatePhoneNumber(const std::string &phone_number) {
     _phone_number = phone_number;
     return _phone_number == phone_number;
   }
 
-  bool UpdateAddress(const std::string &street, const std::string &city,
+  bool updateAddress(const std::string &street, const std::string &city,
                      const std::string &state, int postal_code,
-                     const std::string &country){
+                     const std::string &country) {
     Address new_address(street, city, state, postal_code, country);
     _address = new_address;
     return _address == new_address;
   }
+  bool operator==(const ContactInfo &other) {
+    return (_name == other._name && _phone_number == other._phone_number &&
+            _address == other._address);
+  }
 
-      private : std::string _name;
+private:
+  std::string _name;
   std::string _phone_number;
   Address _address;
 };
