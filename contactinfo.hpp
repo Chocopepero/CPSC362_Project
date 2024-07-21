@@ -1,11 +1,13 @@
+#pragma once
+
 #include <string>
 
 #include "address.hpp"
 
 class ContactInfo {
 public:
-  ContactInfo() = delete;
-  ContactInfo(const std::string &name, const std::string &phone_number,
+  // ContactInfo() = default;
+  ContactInfo(const std::string &name = "", const std::string &phone_number = "",
               const std::string &street = "", const std::string &city = "",
               const std::string &state = "", int postal_code = -1,
               const std::string &country = "")
@@ -28,10 +30,15 @@ public:
     _address = new_address;
     return _address == new_address;
   }
+
   bool operator==(const ContactInfo &other) {
     return (_name == other._name && _phone_number == other._phone_number &&
             _address == other._address);
   }
+
+  std::string getName() const { return _name; }
+  std::string getPhoneNumber() const { return _phone_number; }
+  Address getAddress() const { return _address; }
 
 private:
   std::string _name;
