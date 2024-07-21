@@ -4,10 +4,12 @@ CXXFLAGS = -Wall -std=c++17
 
 # Output binary
 TARGET = main_test
+TEST_TARGET = test_serialization
 
 # Source files and object files
 SRCS = main_test.cpp hotel_backend.cpp reservation.cpp room_db.cpp room.cpp
 OBJS = $(SRCS:.cpp=.o)
+
 
 # Default target
 all: $(TARGET)
@@ -22,4 +24,4 @@ $(TARGET): $(OBJS)
 
 # Clean target to remove generated files
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(TARGET) $(TEST_OBJS) $(TEST_TARGET)

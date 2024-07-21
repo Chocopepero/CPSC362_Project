@@ -27,7 +27,7 @@ void SerializeContactToJSON(
 }
 
 void SerializeVectorOfPairsToJSON(
-    const std::vector<std::pair<std::string,int>> vec,
+    const std::vector<std::pair<std::string,int>>& vec,
     rapidjson::Writer<rapidjson::StringBuffer> *writer) {
   writer->StartArray();
   for (const auto& pair: vec){
@@ -81,11 +81,11 @@ bool HotelBackend::WriteRecordsToJSONFile() const {
   std::ofstream records_file{_reservation_records_filepath};
   rapidjson::StringBuffer ss;
   rapidjson::Writer<rapidjson::StringBuffer> writer(ss);
-  writer.StartObject();
+  writer.StartArray();
   for(auto reservation: _reservation_record){
     SerializeReservationRecordToJSON(reservation.second, &writer);
   }
-  writer.EndObject();
+  writer.EndArray();
 
   records_file << ss.GetString();
 

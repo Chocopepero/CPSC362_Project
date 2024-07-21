@@ -1,5 +1,3 @@
-#pragma once
-
 #include "reservation.hpp"
 
 Reservation::Reservation(std::string name, std::string phone_number, int adults,

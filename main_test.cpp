@@ -5,11 +5,11 @@
 int main() {
   const std::string kFilename = "data/reservation_records.json";
   HotelBackend backend{kFilename};
+  ContactInfo info{"name", "phone"};
   std::vector<std::pair<std::string, int>> beds{{"Queen", 1}};
   std::map<int, Reservation> testdatabase;
   Reservation test{
-      "name",
-      "1234",
+ info,
       1,
       2,
       3,
