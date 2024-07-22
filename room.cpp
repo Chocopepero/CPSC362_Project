@@ -50,7 +50,7 @@ std::istream &operator>>(std::istream &stream, Room &room) {
   char delimiter;
   Room temp{};
   if (stream >> temp._room_id >> std::ws >> delimiter && delimiter == ',' &&
-      stream >> temp._room_type >> std::ws >> delimiter && delimiter == ',') {
+      stream >> temp._room_type) {
     room = std::move(temp);
   }
   else {

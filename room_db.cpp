@@ -13,7 +13,7 @@ RoomDatabase& RoomDatabase::instance(){
   auto getFileName = []()
   {
     std::string filename;
-    if (filename = "RoomList.dat"; std::filesystem::exists(filename));
+    if (filename = "data/RoomList.dat"; std::filesystem::exists(filename));
     else filename.clear();
 
     return filename;
@@ -25,9 +25,10 @@ RoomDatabase& RoomDatabase::instance(){
 
 RoomDatabase::RoomDatabase( const std::string& filename){
   std::ifstream fin(filename);
-  if(!fin.is_open()) std::cerr << "Warning: Could not open room list .dat file. Proceeding with empty list";
+  if(!fin.is_open()) std::cerr << "Warning: Could not open room list .dat file. Proceeding with empty list\n";
   Room tempRoom{};
   while (fin >> tempRoom){
+    std::cout << tempRoom.Get_Room_ID() << '\n';
     _rooms.insert({tempRoom.Get_Room_ID(), std::move(tempRoom)});
   }
 }
