@@ -1,3 +1,6 @@
+#pragma once
+
+#include <sstream>
 #include <string>
 
 class Address {
@@ -13,15 +16,13 @@ public:
         _postal_code{other._postal_code}, _country{other._country} {}
 
   bool change_Address(Address new_address) {
-    _street = new_address._street,
-    _city = new_address._city,
-    _state = new_address._state,
-    _postal_code = new_address._postal_code,
+    _street = new_address._street, _city = new_address._city,
+    _state = new_address._state, _postal_code = new_address._postal_code,
     _country = new_address._country;
     return (*this == new_address);
   }
 
-  bool operator==(const const Address &address_to_compare) {
+  bool operator==(const Address &address_to_compare) {
     if (_street == address_to_compare._street &&
         _city == address_to_compare._city &&
         _state == address_to_compare._state &&
@@ -30,6 +31,13 @@ public:
       return true;
     else
       return false;
+  }
+
+  std::string address_As_String() {
+    std::ostringstream oss;
+    oss << _street << ',' << _city << ',' << _state << ',' << _postal_code
+        << ',' << _country;
+    return oss.str();
   }
 
 private:
