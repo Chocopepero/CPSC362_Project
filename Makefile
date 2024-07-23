@@ -4,7 +4,6 @@ CXXFLAGS = -Wall -std=c++17
 
 # Output binary
 TARGET = main_test
-TEST_TARGET = test_serialization
 
 # Source files and object files
 SRCS = main_test.cpp hotel_backend.cpp reservation.cpp room_db.cpp room.cpp

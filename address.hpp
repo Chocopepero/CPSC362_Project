@@ -1,11 +1,13 @@
 #pragma once
 
+#include <iostream>
 #include <sstream>
 #include <string>
 
 class Address {
 public:
-  Address() = delete;
+  // Do not use default constructor
+  Address() = default;
   Address(const std::string &street, const std::string &city,
           const std::string &state, int postal_code, const std::string &country)
       : _street{street}, _city{city}, _state{state}, _postal_code{postal_code},
@@ -38,6 +40,21 @@ public:
     oss << _street << ',' << _city << ',' << _state << ',' << _postal_code
         << ',' << _country;
     return oss.str();
+  }
+
+  friend std::istream& operator>>(std::istream &stream, Address &address) {
+    char delimiter;
+    Address temp{};
+    if (stream >> temp._street >> std::ws >> delimiter && delimiter == ',' &&
+        stream >> temp._city >> std::ws >> delimiter && delimiter == ',' &&
+        stream >> temp._state >> std::ws >> delimiter && delimiter == ',' &&
+        stream >> temp._postal_code >> std::ws >> delimiter && delimiter == ',' &&
+        stream >> temp._country >> std::ws >> delimiter && delimiter == ',') {
+      address = std::move(temp);
+    } else {
+      stream.setstate(std::ios::failbit);
+    }
+    return stream;
   }
 
 private:

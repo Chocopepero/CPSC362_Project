@@ -10,7 +10,7 @@ public:
   HotelBackend(const std::string &reservation_records_filepath)
       : _reservation_records_filepath{reservation_records_filepath} {}
 
-  // bool LoadRecordsFromJSONFile();
+  bool LoadRecordsFromJSONFile();
   bool WriteRecordsToJSONFile() const;
 
   // Function to set the map up for JSON testing

@@ -13,11 +13,14 @@
 class Reservation {
 public:
   // Default constructor should not be used.
-  Reservation();
+  Reservation() = default;
 
-  // Constructor with ONLY reservation ID for data-base populating purposes.
+  // Constructor with reservation ID for data-base populating purposes.
   // Does NOT call GenerateID function.
-  Reservation(int reservation_id);
+  Reservation(int reservation_id, ContactInfo reserving_guest, int adults,
+              int children, int rooms,
+              std::vector<std::pair<std::string, int>> bed_types,
+              bool fulfillmentStatus);
 
   // Constructor for users with no account or contact info. A name and phone number
   // is still required in order for the ContactInfo class to initialize.

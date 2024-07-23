@@ -31,6 +31,10 @@ public:
     return _address == new_address;
   }
 
+  bool updateAddress(const Address& address){
+    _address = address;
+  }
+
   bool operator==(const ContactInfo &other) {
     return (_name == other._name && _phone_number == other._phone_number &&
             _address == other._address);
