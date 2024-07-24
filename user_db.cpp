@@ -52,3 +52,12 @@ User *UserDB::find(const std::string &username) {
 }
 
 std::size_t UserDB::size() const { return _users.size(); }
+
+bool UserDB::verify_login(const std::string& username, const std::string& password){
+  auto user = find(username);
+  if (user == nullptr)
+  {
+    return false;
+  }
+  return user->validate_login(username, password);
+}

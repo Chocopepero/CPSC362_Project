@@ -12,9 +12,6 @@ int main() {
   // std::stringstream stream{"username,password,email,name,phone,1,2,3,4"};
   // stream >> user;
   // user_db.test(user);
-  for (auto user : user_db.TestMap()) {
-    std::cout << user.first << "/" << user.second << '\n';
-  };
   // auto &roomdatabase = RoomDatabase::instance();
   // ContactInfo guest("name", "number");
   // std::vector<std::pair<std::string, int>> beds{{"Queen", 2}};
