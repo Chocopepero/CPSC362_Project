@@ -157,6 +157,5 @@ bool HotelBackend::LoadRecordsFromJSONFile() {
     Reservation reservation = DeserializeReservationFromJSON(reservationJSON);
     _reservation_record[reservation.get_Reservation_Id()] = reservation;
   }
-
   return true;
 }

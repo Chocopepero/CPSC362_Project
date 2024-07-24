@@ -33,6 +33,7 @@ public:
 
   bool updateAddress(const Address& address){
     _address = address;
+    return true;
   }
 
   bool operator==(const ContactInfo &other) {
