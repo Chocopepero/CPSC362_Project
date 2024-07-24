@@ -18,8 +18,13 @@ Reservation::Reservation(ContactInfo reserving_guest, int adults, int children,
   generate_Reservation_Id(reservations);
 };
 
-Reservation::Reservation(int reservation_id)
-    : _reservation_id{reservation_id} {};
+Reservation::Reservation(int reservation_id, ContactInfo reserving_guest,
+                         int adults, int children, int rooms,
+                         std::vector<std::pair<std::string, int>> bed_types,
+                         bool fulfillmentStatus)
+    : _reservation_id{reservation_id}, _primary_guest(reserving_guest),
+      _num_of_adults{adults}, _num_of_children{children}, _num_of_rooms{rooms},
+      _bed_types{bed_types}, _fulfillment_status{fulfillmentStatus} {};
 
 int Reservation::generate_Reservation_Id(
     std::map<int, Reservation> &reservations) {

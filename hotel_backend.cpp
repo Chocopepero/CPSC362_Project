@@ -20,8 +20,8 @@ void SerializeContactToJSON(
   writer->Key("_phone_number");
   writer->String(contact.getPhoneNumber().c_str());
 
-  writer->Key("_address");
-  writer->String(contact.getAddress().address_As_String().c_str());
+  // writer->Key("_address");
+  // writer->String(contact.getAddress().address_As_String().c_str());
 
   writer->EndObject();
 }
@@ -72,10 +72,48 @@ void SerializeReservationRecordToJSON(
   writer->EndObject();
 }
 
-// Reservation DeserializeReservationFromJSON(
-//     const rapidjson::Value &json_obj){
-//   Reservation reservation{json_obj[]}
-// }
+std::vector<std::pair<std::string, int>>
+DeserializeVectorOfPairsFromJSON(const rapidjson::Value &json) {
+  std::vector<std::pair<std::string, int>> vec;
+
+  for (auto &v : json.GetArray()) {
+    std::string type = v["Type"].GetString();
+    int num = v["Num"].GetInt();
+    vec.emplace_back(type, num);
+  }
+  return vec;
+}
+
+ContactInfo DeserializeContactFromJSON(const rapidjson::Value &json) {
+  std::string name = json["_name"].GetString();
+  std::string phoneNumber = json["_phone_number"].GetString();
+  // std::string addressString = json["_address"].GetString();
+
+  // std::stringstream ss(addressString);
+  // Address address{};
+  // ss >> address;
+  ContactInfo contact{name, phoneNumber};
+  // contact.updateAddress(address);
+
+  return contact;
+}
+
+Reservation DeserializeReservationFromJSON(const rapidjson::Value &json) {
+  int reservationId = json["_reservation_id"].GetInt();
+  ContactInfo primaryGuest = DeserializeContactFromJSON(json["_primary_guest"]);
+  int numOfAdults = json["_num_of_adults"].GetInt();
+  int numOfChildren = json["_num_of_children"].GetInt();
+  int numOfRooms = json["_num_of_rooms"].GetInt();
+  auto bedTypes = DeserializeVectorOfPairsFromJSON(json["_bed_types"]);
+  bool fulfillmentStatus = json["_fulfillment_status"].GetBool();
+
+  Reservation reservation(reservationId, primaryGuest, numOfAdults,
+                          numOfChildren, numOfRooms, bedTypes,
+                          fulfillmentStatus);
+
+  return reservation;
+}
+
 
 bool HotelBackend::WriteRecordsToJSONFile() const {
   std::ofstream records_file{_reservation_records_filepath};
@@ -91,5 +129,33 @@ bool HotelBackend::WriteRecordsToJSONFile() const {
 
   records_file.flush();
   records_file.close();
+  return true;
+}
+
+bool HotelBackend::LoadRecordsFromJSONFile() {
+  std::ifstream records_file{_reservation_records_filepath};
+  if (!records_file.is_open()) {
+    std::cerr << "Could not open file for reading: "
+              << _reservation_records_filepath << std::endl;
+    return false;
+  }
+
+  std::string jsonString((std::istreambuf_iterator<char>(records_file)),
+                         std::istreambuf_iterator<char>());
+  rapidjson::Document doc;
+  doc.Parse(jsonString.c_str());
+
+  if (!doc.IsArray()) {
+    std::cerr << "Invalid JSON format in file: "
+              << _reservation_records_filepath << std::endl;
+    return false;
+  }
+
+  _reservation_record.clear();
+
+  for (auto &reservationJSON : doc.GetArray()) {
+    Reservation reservation = DeserializeReservationFromJSON(reservationJSON);
+    _reservation_record[reservation.get_Reservation_Id()] = reservation;
+  }
   return true;
 }

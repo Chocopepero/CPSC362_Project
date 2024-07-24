@@ -28,8 +28,12 @@ public:
   int Get_Reservation() const { return _registered_reservation_id; }
   void Set_Reservation(int reservation_to_set) {
     _registered_reservation_id = reservation_to_set;
+    _available = false;
   }
-  void Clear_Reservation() { _registered_reservation_id = 0; }
+  void Clear_Reservation() {
+    _registered_reservation_id = 0;
+    _available = true;
+  }
   // Operator overload to read .dat file that lists all the rooms.
   friend std::istream &operator>>(std::istream &stream, Room &room);
 
