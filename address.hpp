@@ -42,19 +42,26 @@ public:
     return oss.str();
   }
 
-  friend std::istream& operator>>(std::istream &stream, Address &address) {
+  friend std::istream &operator>>(std::istream &stream, Address &address) {
     char delimiter;
     Address temp{};
     if (stream >> temp._street >> std::ws >> delimiter && delimiter == ',' &&
         stream >> temp._city >> std::ws >> delimiter && delimiter == ',' &&
         stream >> temp._state >> std::ws >> delimiter && delimiter == ',' &&
-        stream >> temp._postal_code >> std::ws >> delimiter && delimiter == ',' &&
-        stream >> temp._country >> std::ws >> delimiter && delimiter == ',') {
+        stream >> temp._postal_code >> std::ws >> delimiter &&
+        delimiter == ',' && stream >> temp._country >> std::ws >> delimiter &&
+        delimiter == ',') {
       address = std::move(temp);
     } else {
       stream.setstate(std::ios::failbit);
     }
     return stream;
+  }
+
+  friend std::ostream &operator<<(std::ostream &stream, Address &address) {
+    return stream << address._street << "," << address._city << ","
+                  << address._state << "," << address._postal_code << ","
+                  << address._country;
   }
 
 private:
