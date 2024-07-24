@@ -28,7 +28,6 @@ RoomDatabase::RoomDatabase( const std::string& filename){
   if(!fin.is_open()) std::cerr << "Warning: Could not open room list .dat file. Proceeding with empty list\n";
   Room tempRoom{};
   while (fin >> tempRoom){
-    std::cout << tempRoom.Get_Room_ID() << '\n';
     _rooms.insert({tempRoom.Get_Room_ID(), std::move(tempRoom)});
   }
 }

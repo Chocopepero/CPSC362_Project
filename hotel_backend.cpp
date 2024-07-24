@@ -20,8 +20,8 @@ void SerializeContactToJSON(
   writer->Key("_phone_number");
   writer->String(contact.getPhoneNumber().c_str());
 
-  writer->Key("_address");
-  writer->String(contact.getAddress().address_As_String().c_str());
+  // writer->Key("_address");
+  // writer->String(contact.getAddress().address_As_String().c_str());
 
   writer->EndObject();
 }
@@ -87,13 +87,13 @@ DeserializeVectorOfPairsFromJSON(const rapidjson::Value &json) {
 ContactInfo DeserializeContactFromJSON(const rapidjson::Value &json) {
   std::string name = json["_name"].GetString();
   std::string phoneNumber = json["_phone_number"].GetString();
-  std::string addressString = json["_address"].GetString();
+  // std::string addressString = json["_address"].GetString();
 
-  std::stringstream ss(addressString);
-  Address address{};
-  ss >> address;
+  // std::stringstream ss(addressString);
+  // Address address{};
+  // ss >> address;
   ContactInfo contact{name, phoneNumber};
-  contact.updateAddress(address);
+  // contact.updateAddress(address);
 
   return contact;
 }
