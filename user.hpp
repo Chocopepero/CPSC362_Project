@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "contactinfo.hpp"
+#include "reservation.hpp"
 
 class User {
 public:
@@ -34,6 +35,21 @@ public:
   bool validate_login(std::string username_or_email, std::string password) {
     return ((_username == username_or_email || _email == username_or_email) &&
             _password == password);
+  }
+
+  void Add_Reservation(const Reservation& res){
+    _reservations.push_back(res.get_Reservation_Id());
+  }
+
+  bool Remove_Reservation(const Reservation& res){
+    for (auto it = _reservations.begin(); it != _reservations.end(); ++it)
+    {
+      if (*it == res.get_Reservation_Id()){
+        _reservations.erase(it);
+        return true;
+      }
+    }
+    return false;
   }
 
   friend std::istream &operator>>(std::istream &stream, User &user) {

@@ -12,6 +12,8 @@ public:
 
   bool LoadRecordsFromJSONFile();
   bool WriteRecordsToJSONFile() const;
+  bool AssignRoom(int res_id);
+  bool CheckOut(int room_id);
 
 private:
   const std::string &_reservation_records_filepath;

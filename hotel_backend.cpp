@@ -1,4 +1,5 @@
 #include "hotel_backend.hpp"
+#include "room_db.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -27,10 +28,10 @@ void SerializeContactToJSON(
 }
 
 void SerializeVectorOfPairsToJSON(
-    const std::vector<std::pair<std::string,int>>& vec,
+    const std::vector<std::pair<std::string, int>> &vec,
     rapidjson::Writer<rapidjson::StringBuffer> *writer) {
   writer->StartArray();
-  for (const auto& pair: vec){
+  for (const auto &pair : vec) {
     writer->StartObject();
 
     writer->Key("Type");
@@ -114,13 +115,12 @@ Reservation DeserializeReservationFromJSON(const rapidjson::Value &json) {
   return reservation;
 }
 
-
 bool HotelBackend::WriteRecordsToJSONFile() const {
   std::ofstream records_file{_reservation_records_filepath};
   rapidjson::StringBuffer ss;
   rapidjson::Writer<rapidjson::StringBuffer> writer(ss);
   writer.StartArray();
-  for(auto reservation: _reservation_record){
+  for (auto reservation : _reservation_record) {
     SerializeReservationRecordToJSON(reservation.second, &writer);
   }
   writer.EndArray();
@@ -157,5 +157,30 @@ bool HotelBackend::LoadRecordsFromJSONFile() {
     Reservation reservation = DeserializeReservationFromJSON(reservationJSON);
     _reservation_record[reservation.get_Reservation_Id()] = reservation;
   }
+  return true;
+}
+
+bool HotelBackend::AssignRoom(int res_id) {
+  auto reserve = _reservation_record.find(res_id);
+  if (reserve == _reservation_record.end())
+    return false;
+
+  const std::string bed_type = reserve->second.get_Bed_Types().at(0).first;
+  auto &room_db = RoomDatabase::instance();
+  int open_room = room_db.first_open_room(bed_type);
+
+  // If the return value of first open room is 0, there is no open room or we
+  // failed to find one.
+  if (!open_room) { return false; }
+
+  _reservation_record.at(res_id).fulfill_Reservation(*room_db.find(open_room));
+  return true;
+}
+
+bool HotelBackend::CheckOut(int room_id){
+  auto &room_db = RoomDatabase::instance();
+  auto room = room_db.find(room_id);
+  if (room == nullptr) {return false;}
+  room->Clear_Reservation();
   return true;
 }
