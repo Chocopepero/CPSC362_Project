@@ -34,7 +34,7 @@ public:
   //   return true;
   // }
 
-  bool operator==(const ContactInfo &other) {
+  bool operator==(const ContactInfo &other) const {
     return (_name == other._name && _phone_number == other._phone_number);
   }
 

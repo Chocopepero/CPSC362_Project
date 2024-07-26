@@ -1,5 +1,6 @@
 #pragma once
 
+#include <compare>
 #include <map>
 #include <random>
 #include <string>
@@ -7,6 +8,7 @@
 #include <vector>
 
 #include "contactinfo.hpp"
+#include "date.hpp"
 #include "room.hpp"
 #include "user.hpp"
 
@@ -43,12 +45,18 @@ public:
   int get_Num_of_Rooms() const { return _num_of_rooms; }
   std::vector<std::pair<std::string, int>> get_Bed_Types() const { return _bed_types; }
   bool get_Fulfillment_Status() const { return _fulfillment_status; }
+  Date get_Arrival() const { return _arrival; }
+  Date get_Departure() const { return _departure; }
 
   void set_Num_of_Adults(int num) { _num_of_adults = num; }
   void set_Num_of_Children(int num) { _num_of_children = num; }
   void set_Num_of_Rooms(int num) { _num_of_rooms = num; }
   void set_Bed_Types(std::vector<std::pair<std::string, int>> beds) { _bed_types = beds; }
   void set_Fulfillment_Status(bool status) { _fulfillment_status = status; }
+  void set_Dates(const Date& arr, const Date& dep) {
+    _arrival = arr;
+    _departure = dep;
+  }
 
   // This function is designed to accept a vector full of pairs that hold
   // the room type in first and the quantity in second.
@@ -72,6 +80,8 @@ private:
   int _num_of_adults;
   int _num_of_children;
   int _num_of_rooms;
+  Date _arrival;
+  Date _departure;
   std::vector<std::pair<std::string, int>> _bed_types;
   bool _fulfillment_status;
 };

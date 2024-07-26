@@ -56,4 +56,5 @@ int RoomDatabase::first_open_room(const std::string &room_type){
     if(find(s)->Is_Available()) {return s;}
     ++s;
   }
+  return 0;
 }

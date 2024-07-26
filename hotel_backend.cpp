@@ -26,6 +26,20 @@ void SerializeContactToJSON(
 
   writer->EndObject();
 }
+void SerializeDateToJSON(const Date &date,
+                         rapidjson::Writer<rapidjson::StringBuffer> *writer) {
+  writer->StartObject();
+  writer->Key("_year");
+  writer->Int(date.get_Year());
+
+  writer->Key("_month");
+  writer->Int(date.get_Month());
+
+  writer->Key("_day");
+  writer->Int(date.get_Day());
+
+  writer->EndObject();
+}
 
 void SerializeVectorOfPairsToJSON(
     const std::vector<std::pair<std::string, int>> &vec,
@@ -64,6 +78,12 @@ void SerializeReservationRecordToJSON(
 
   writer->Key("_num_of_rooms");
   writer->Int(reservation.get_Num_of_Rooms());
+
+  writer->Key("_arrival");
+  SerializeDateToJSON(reservation.get_Arrival(), writer);
+
+  writer->Key("_departure");
+  SerializeDateToJSON(reservation.get_Departure(), writer);
 
   writer->Key("_bed_types");
   SerializeVectorOfPairsToJSON(reservation.get_Bed_Types(), writer);
