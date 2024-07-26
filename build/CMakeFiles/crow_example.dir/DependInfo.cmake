@@ -9,7 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/sam/CPSC362/CPSC362_Project/hotel_backend.cpp" "CMakeFiles/crow_example.dir/hotel_backend.cpp.o" "gcc" "CMakeFiles/crow_example.dir/hotel_backend.cpp.o.d"
-  "/home/sam/CPSC362/CPSC362_Project/main_test.cpp" "CMakeFiles/crow_example.dir/main_test.cpp.o" "gcc" "CMakeFiles/crow_example.dir/main_test.cpp.o.d"
+  "/home/sam/CPSC362/CPSC362_Project/main.cpp" "CMakeFiles/crow_example.dir/main.cpp.o" "gcc" "CMakeFiles/crow_example.dir/main.cpp.o.d"
   "/home/sam/CPSC362/CPSC362_Project/reservation.cpp" "CMakeFiles/crow_example.dir/reservation.cpp.o" "gcc" "CMakeFiles/crow_example.dir/reservation.cpp.o.d"
   "/home/sam/CPSC362/CPSC362_Project/room.cpp" "CMakeFiles/crow_example.dir/room.cpp.o" "gcc" "CMakeFiles/crow_example.dir/room.cpp.o.d"
   "/home/sam/CPSC362/CPSC362_Project/room_db.cpp" "CMakeFiles/crow_example.dir/room_db.cpp.o" "gcc" "CMakeFiles/crow_example.dir/room_db.cpp.o.d"

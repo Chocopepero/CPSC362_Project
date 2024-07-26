@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/crow_example.dir/hotel_backend.cpp.o"
   "CMakeFiles/crow_example.dir/hotel_backend.cpp.o.d"
-  "CMakeFiles/crow_example.dir/main_test.cpp.o"
-  "CMakeFiles/crow_example.dir/main_test.cpp.o.d"
+  "CMakeFiles/crow_example.dir/main.cpp.o"
+  "CMakeFiles/crow_example.dir/main.cpp.o.d"
   "CMakeFiles/crow_example.dir/reservation.cpp.o"
   "CMakeFiles/crow_example.dir/reservation.cpp.o.d"
   "CMakeFiles/crow_example.dir/room.cpp.o"

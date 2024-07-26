@@ -69,19 +69,19 @@ include CMakeFiles/crow_example.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/crow_example.dir/flags.make
 
-CMakeFiles/crow_example.dir/main_test.cpp.o: CMakeFiles/crow_example.dir/flags.make
-CMakeFiles/crow_example.dir/main_test.cpp.o: ../main_test.cpp
-CMakeFiles/crow_example.dir/main_test.cpp.o: CMakeFiles/crow_example.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sam/CPSC362/CPSC362_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/crow_example.dir/main_test.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/crow_example.dir/main_test.cpp.o -MF CMakeFiles/crow_example.dir/main_test.cpp.o.d -o CMakeFiles/crow_example.dir/main_test.cpp.o -c /home/sam/CPSC362/CPSC362_Project/main_test.cpp
+CMakeFiles/crow_example.dir/main.cpp.o: CMakeFiles/crow_example.dir/flags.make
+CMakeFiles/crow_example.dir/main.cpp.o: ../main.cpp
+CMakeFiles/crow_example.dir/main.cpp.o: CMakeFiles/crow_example.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sam/CPSC362/CPSC362_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/crow_example.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/crow_example.dir/main.cpp.o -MF CMakeFiles/crow_example.dir/main.cpp.o.d -o CMakeFiles/crow_example.dir/main.cpp.o -c /home/sam/CPSC362/CPSC362_Project/main.cpp
 
-CMakeFiles/crow_example.dir/main_test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/crow_example.dir/main_test.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sam/CPSC362/CPSC362_Project/main_test.cpp > CMakeFiles/crow_example.dir/main_test.cpp.i
+CMakeFiles/crow_example.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/crow_example.dir/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sam/CPSC362/CPSC362_Project/main.cpp > CMakeFiles/crow_example.dir/main.cpp.i
 
-CMakeFiles/crow_example.dir/main_test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/crow_example.dir/main_test.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sam/CPSC362/CPSC362_Project/main_test.cpp -o CMakeFiles/crow_example.dir/main_test.cpp.s
+CMakeFiles/crow_example.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/crow_example.dir/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sam/CPSC362/CPSC362_Project/main.cpp -o CMakeFiles/crow_example.dir/main.cpp.s
 
 CMakeFiles/crow_example.dir/user.cpp.o: CMakeFiles/crow_example.dir/flags.make
 CMakeFiles/crow_example.dir/user.cpp.o: ../user.cpp
@@ -169,7 +169,7 @@ CMakeFiles/crow_example.dir/user_db.cpp.s: cmake_force
 
 # Object files for target crow_example
 crow_example_OBJECTS = \
-"CMakeFiles/crow_example.dir/main_test.cpp.o" \
+"CMakeFiles/crow_example.dir/main.cpp.o" \
 "CMakeFiles/crow_example.dir/user.cpp.o" \
 "CMakeFiles/crow_example.dir/reservation.cpp.o" \
 "CMakeFiles/crow_example.dir/room.cpp.o" \
@@ -180,7 +180,7 @@ crow_example_OBJECTS = \
 # External object files for target crow_example
 crow_example_EXTERNAL_OBJECTS =
 
-crow_example: CMakeFiles/crow_example.dir/main_test.cpp.o
+crow_example: CMakeFiles/crow_example.dir/main.cpp.o
 crow_example: CMakeFiles/crow_example.dir/user.cpp.o
 crow_example: CMakeFiles/crow_example.dir/reservation.cpp.o
 crow_example: CMakeFiles/crow_example.dir/room.cpp.o

@@ -376,7 +376,7 @@ CMakeFiles/crow_example.dir/hotel_backend.cpp.o: ../hotel_backend.cpp \
   ../server_utils/rapidjson/stringbuffer.h \
   ../server_utils/rapidjson/writer.h
 
-CMakeFiles/crow_example.dir/main_test.cpp.o: ../main_test.cpp \
+CMakeFiles/crow_example.dir/main.cpp.o: ../main.cpp \
   /usr/include/stdc-predef.h \
   /usr/include/c++/13/string \
   /usr/include/c++/13/bits/requires_hosted.h \
@@ -523,68 +523,28 @@ CMakeFiles/crow_example.dir/main_test.cpp.o: ../main_test.cpp \
   /usr/include/c++/13/bits/uses_allocator_args.h \
   /usr/include/c++/13/tuple \
   /usr/include/c++/13/bits/ranges_util.h \
-  ../hotel_backend.hpp \
-  /usr/include/c++/13/map \
-  /usr/include/c++/13/bits/stl_tree.h \
-  /usr/include/c++/13/ext/aligned_buffer.h \
-  /usr/include/c++/13/bits/node_handle.h \
-  /usr/include/c++/13/bits/stl_map.h \
-  /usr/include/c++/13/bits/stl_multimap.h \
-  /usr/include/c++/13/bits/erase_if.h \
-  ../reservation.hpp \
-  /usr/include/c++/13/random \
-  /usr/include/c++/13/cmath \
-  /usr/include/math.h \
-  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
-  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
-  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
-  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
-  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
-  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
-  /usr/include/c++/13/bits/specfun.h \
-  /usr/include/c++/13/limits \
-  /usr/include/c++/13/tr1/gamma.tcc \
-  /usr/include/c++/13/tr1/special_function_util.h \
-  /usr/include/c++/13/tr1/bessel_function.tcc \
-  /usr/include/c++/13/tr1/beta_function.tcc \
-  /usr/include/c++/13/tr1/ell_integral.tcc \
-  /usr/include/c++/13/tr1/exp_integral.tcc \
-  /usr/include/c++/13/tr1/hypergeometric.tcc \
-  /usr/include/c++/13/tr1/legendre_function.tcc \
-  /usr/include/c++/13/tr1/modified_bessel_func.tcc \
-  /usr/include/c++/13/tr1/poly_hermite.tcc \
-  /usr/include/c++/13/tr1/poly_laguerre.tcc \
-  /usr/include/c++/13/tr1/riemann_zeta.tcc \
-  /usr/include/c++/13/cstdint \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
-  /usr/include/stdint.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/c++/13/bits/random.h \
-  /usr/include/c++/13/vector \
-  /usr/include/c++/13/bits/stl_uninitialized.h \
-  /usr/include/c++/13/bits/stl_vector.h \
-  /usr/include/c++/13/bits/stl_bvector.h \
-  /usr/include/c++/13/bits/vector.tcc \
+  ../crow_functions.cpp \
+  ../user.hpp \
+  /usr/include/c++/13/algorithm \
+  /usr/include/c++/13/bits/stl_algo.h \
+  /usr/include/c++/13/bits/algorithmfwd.h \
+  /usr/include/c++/13/bits/stl_heap.h \
   /usr/include/c++/13/bits/uniform_int_dist.h \
-  /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
-  /usr/include/c++/13/bits/random.tcc \
-  /usr/include/c++/13/numeric \
-  /usr/include/c++/13/bits/stl_numeric.h \
-  /usr/include/c++/13/pstl/glue_numeric_defs.h \
-  /usr/include/c++/13/pstl/execution_defs.h \
-  /usr/include/c++/13/utility \
-  /usr/include/c++/13/bits/stl_relops.h \
-  ../contactinfo.hpp \
-  /usr/include/c++/13/istream \
-  /usr/include/c++/13/ios \
+  /usr/include/c++/13/bits/stl_tempbuf.h \
+  /usr/include/c++/13/bits/ranges_algo.h \
+  /usr/include/c++/13/optional \
   /usr/include/c++/13/exception \
   /usr/include/c++/13/bits/exception_ptr.h \
   /usr/include/c++/13/bits/cxxabi_init_exception.h \
   /usr/include/c++/13/typeinfo \
   /usr/include/c++/13/bits/nested_exception.h \
+  /usr/include/c++/13/bits/enable_special_members.h \
+  /usr/include/c++/13/bits/ranges_algobase.h \
+  /usr/include/c++/13/pstl/glue_algorithm_defs.h \
+  /usr/include/c++/13/pstl/execution_defs.h \
+  /usr/include/c++/13/iostream \
+  /usr/include/c++/13/ostream \
+  /usr/include/c++/13/ios \
   /usr/include/c++/13/bits/ios_base.h \
   /usr/include/c++/13/ext/atomicity.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h \
@@ -621,31 +581,70 @@ CMakeFiles/crow_example.dir/main_test.cpp.o: ../main_test.cpp \
   /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
   /usr/include/c++/13/bits/basic_ios.tcc \
-  /usr/include/c++/13/ostream \
   /usr/include/c++/13/bits/ostream.tcc \
+  /usr/include/c++/13/istream \
   /usr/include/c++/13/bits/istream.tcc \
-  ../date.hpp \
-  ../room.hpp \
-  /usr/include/c++/13/iostream \
-  ../user.hpp \
-  /usr/include/c++/13/algorithm \
-  /usr/include/c++/13/bits/stl_algo.h \
-  /usr/include/c++/13/bits/algorithmfwd.h \
-  /usr/include/c++/13/bits/stl_heap.h \
-  /usr/include/c++/13/bits/stl_tempbuf.h \
-  /usr/include/c++/13/bits/ranges_algo.h \
-  /usr/include/c++/13/optional \
-  /usr/include/c++/13/bits/enable_special_members.h \
-  /usr/include/c++/13/bits/ranges_algobase.h \
-  /usr/include/c++/13/pstl/glue_algorithm_defs.h \
   /usr/include/c++/13/sstream \
   /usr/include/c++/13/bits/sstream.tcc \
-  ../room_db.hpp \
+  /usr/include/c++/13/vector \
+  /usr/include/c++/13/bits/stl_uninitialized.h \
+  /usr/include/c++/13/bits/stl_vector.h \
+  /usr/include/c++/13/bits/stl_bvector.h \
+  /usr/include/c++/13/bits/vector.tcc \
+  ../contactinfo.hpp \
+  ../reservation.hpp \
+  /usr/include/c++/13/map \
+  /usr/include/c++/13/bits/stl_tree.h \
+  /usr/include/c++/13/ext/aligned_buffer.h \
+  /usr/include/c++/13/bits/node_handle.h \
+  /usr/include/c++/13/bits/stl_map.h \
+  /usr/include/c++/13/bits/stl_multimap.h \
+  /usr/include/c++/13/bits/erase_if.h \
+  /usr/include/c++/13/random \
+  /usr/include/c++/13/cmath \
+  /usr/include/math.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/c++/13/bits/specfun.h \
+  /usr/include/c++/13/limits \
+  /usr/include/c++/13/tr1/gamma.tcc \
+  /usr/include/c++/13/tr1/special_function_util.h \
+  /usr/include/c++/13/tr1/bessel_function.tcc \
+  /usr/include/c++/13/tr1/beta_function.tcc \
+  /usr/include/c++/13/tr1/ell_integral.tcc \
+  /usr/include/c++/13/tr1/exp_integral.tcc \
+  /usr/include/c++/13/tr1/hypergeometric.tcc \
+  /usr/include/c++/13/tr1/legendre_function.tcc \
+  /usr/include/c++/13/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/13/tr1/poly_hermite.tcc \
+  /usr/include/c++/13/tr1/poly_laguerre.tcc \
+  /usr/include/c++/13/tr1/riemann_zeta.tcc \
+  /usr/include/c++/13/cstdint \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/c++/13/bits/random.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
+  /usr/include/c++/13/bits/random.tcc \
+  /usr/include/c++/13/numeric \
+  /usr/include/c++/13/bits/stl_numeric.h \
+  /usr/include/c++/13/pstl/glue_numeric_defs.h \
+  /usr/include/c++/13/utility \
+  /usr/include/c++/13/bits/stl_relops.h \
+  ../date.hpp \
+  ../room.hpp \
+  ../server_utils/crow_all.h \
   /usr/include/c++/13/unordered_map \
   /usr/include/c++/13/bits/unordered_map.h \
   /usr/include/c++/13/bits/hashtable.h \
   /usr/include/c++/13/bits/hashtable_policy.h \
-  ../server_utils/crow_all.h \
   /usr/include/boost/algorithm/string/predicate.hpp \
   /usr/include/c++/13/iterator \
   /usr/include/c++/13/bits/stream_iterator.h \
@@ -2185,6 +2184,8 @@ CMakeFiles/crow_example.dir/main_test.cpp.o: ../main_test.cpp \
   /usr/include/boost/date_time/filetime_functions.hpp \
   /usr/include/boost/date_time/posix_time/time_parsers.hpp \
   /usr/include/c++/13/thread \
+  ../hotel_backend.hpp \
+  ../room_db.hpp \
   ../server_utils/sessions.h \
   ../user_db.hpp
 
@@ -4333,10 +4334,6 @@ CMakeFiles/crow_example.dir/user_db.cpp.o: ../user_db.cpp \
 
 /usr/include/boost/smart_ptr/detail/yield_k.hpp:
 
-/usr/include/boost/numeric/conversion/conversion_traits.hpp:
-
-/usr/include/boost/mpl/aux_/config/pp_counter.hpp:
-
 /usr/include/boost/asio/impl/defer.hpp:
 
 /usr/include/boost/type_traits/is_floating_point.hpp:
@@ -4565,6 +4562,12 @@ CMakeFiles/crow_example.dir/user_db.cpp.o: ../user_db.cpp \
 
 ../server_utils/crow_all.h:
 
+/usr/include/boost/asio/traits/connect_free.hpp:
+
+../main.cpp:
+
+/usr/include/boost/type_traits/make_void.hpp:
+
 ../server_utils/rapidjson/error/error.h:
 
 ../server_utils/rapidjson/internal/pow10.h:
@@ -4610,6 +4613,8 @@ CMakeFiles/crow_example.dir/user_db.cpp.o: ../user_db.cpp \
 /usr/include/c++/13/bits/std_mutex.h:
 
 /usr/include/boost/integer_traits.hpp:
+
+../crow_functions.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/syscall.h:
 
@@ -4674,6 +4679,10 @@ CMakeFiles/crow_example.dir/user_db.cpp.o: ../user_db.cpp \
 /usr/include/boost/exception/exception.hpp:
 
 /usr/include/boost/asio/detail/conditionally_enabled_event.hpp:
+
+/usr/include/boost/asio/detail/event.hpp:
+
+/usr/include/boost/asio/detail/is_buffer_sequence.hpp:
 
 /usr/include/c++/13/bits/stream_iterator.h:
 
@@ -4884,6 +4893,10 @@ CMakeFiles/crow_example.dir/user_db.cpp.o: ../user_db.cpp \
 /usr/include/boost/asio/generic/datagram_protocol.hpp:
 
 /usr/include/boost/asio/impl/io_context.hpp:
+
+/usr/include/boost/numeric/conversion/conversion_traits.hpp:
+
+/usr/include/boost/mpl/aux_/config/pp_counter.hpp:
 
 /usr/include/alloca.h:
 
@@ -5314,8 +5327,6 @@ CMakeFiles/crow_example.dir/user_db.cpp.o: ../user_db.cpp \
 /usr/include/c++/13/tr1/poly_hermite.tcc:
 
 /usr/include/boost/asio/traits/query_static_constexpr_member.hpp:
-
-../main_test.cpp:
 
 /usr/include/c++/13/numbers:
 
@@ -6283,12 +6294,6 @@ CMakeFiles/crow_example.dir/user_db.cpp.o: ../user_db.cpp \
 
 /usr/include/boost/type_traits/detail/has_binary_operator.hpp:
 
-/usr/include/boost/type_traits/make_void.hpp:
-
-/usr/include/boost/asio/detail/is_buffer_sequence.hpp:
-
-/usr/include/boost/asio/detail/event.hpp:
-
 /usr/include/boost/type_traits/has_minus.hpp:
 
 /usr/include/boost/asio/impl/read_until.hpp:
@@ -6662,8 +6667,6 @@ CMakeFiles/crow_example.dir/user_db.cpp.o: ../user_db.cpp \
 /usr/include/x86_64-linux-gnu/bits/ioctls.h:
 
 /usr/include/boost/asio/system_context.hpp:
-
-/usr/include/boost/asio/traits/connect_free.hpp:
 
 /usr/include/boost/asio/is_applicable_property.hpp:
 

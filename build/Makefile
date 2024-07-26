@@ -153,29 +153,29 @@ hotel_backend.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/hotel_backend.cpp.s
 .PHONY : hotel_backend.cpp.s
 
-main_test.o: main_test.cpp.o
-.PHONY : main_test.o
+main.o: main.cpp.o
+.PHONY : main.o
 
 # target to build an object file
-main_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main_test.cpp.o
-.PHONY : main_test.cpp.o
+main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-main_test.i: main_test.cpp.i
-.PHONY : main_test.i
+main.i: main.cpp.i
+.PHONY : main.i
 
 # target to preprocess a source file
-main_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main_test.cpp.i
-.PHONY : main_test.cpp.i
+main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-main_test.s: main_test.cpp.s
-.PHONY : main_test.s
+main.s: main.cpp.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-main_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main_test.cpp.s
-.PHONY : main_test.cpp.s
+main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 reservation.o: reservation.cpp.o
 .PHONY : reservation.o
@@ -309,9 +309,9 @@ help:
 	@echo "... hotel_backend.o"
 	@echo "... hotel_backend.i"
 	@echo "... hotel_backend.s"
-	@echo "... main_test.o"
-	@echo "... main_test.i"
-	@echo "... main_test.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 	@echo "... reservation.o"
 	@echo "... reservation.i"
 	@echo "... reservation.s"
