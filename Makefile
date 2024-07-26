@@ -1,6 +1,6 @@
 # Compiler and compiler flags
-CXX = g++
-CXXFLAGS = -Wall -g
+CXX = clang++
+CXXFLAGS = -Wall -std=c++17
 
 # Output binary
 TARGET = main_test

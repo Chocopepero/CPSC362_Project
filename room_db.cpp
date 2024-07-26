@@ -39,3 +39,21 @@ Room* RoomDatabase::find(const int room_id){
 }
 
 std::size_t RoomDatabase::size() const { return _rooms.size(); }
+
+int RoomDatabase::first_open_room(const std::string &room_type){
+  int s, e;
+  if(room_type == "Standard"){
+    s = 1;
+    e = 4;
+  } else if(room_type == "Deluxe"){
+    s = 5;
+    e = 8;
+  } else if(room_type == "Suite"){
+    s = 9;
+    e = 10;
+  } else{ return 0; }
+  while(s <= e){
+    if(find(s)->Is_Available()) {return s;}
+    ++s;
+  }
+}

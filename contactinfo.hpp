@@ -9,11 +9,8 @@ class ContactInfo {
 public:
   // ContactInfo() = default;
   ContactInfo(const std::string &name = "",
-              const std::string &phone_number = "",
-              const std::string &street = "", const std::string &city = "",
-              const std::string &state = "", int postal_code = -1,
-              const std::string &country = "")
-      : _name{name}, _phone_number{phone_number}{}
+              const std::string &phone_number = "")
+      : _name{name}, _phone_number{phone_number} {}
 
   bool updateName(const std::string &name) {
     _name = name;

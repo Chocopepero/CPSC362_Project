@@ -11,6 +11,7 @@ public:
   static RoomDatabase &instance();
   Room *find(const int room_id);
   std::size_t size() const;
+  int first_open_room(const std::string &room_type);
 
 private:
   RoomDatabase(const std::string &filename);
