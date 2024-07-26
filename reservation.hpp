@@ -24,17 +24,19 @@ public:
               std::vector<std::pair<std::string, int>> bed_types,
               bool fulfillmentStatus);
 
-  // Constructor for users with no account or contact info. A name and phone number
-  // is still required in order for the ContactInfo class to initialize.
+  // Constructor for users with no account or contact info. A name and phone
+  // number is still required in order for the ContactInfo class to initialize.
   Reservation(std::string name, std::string phone_number, int adults,
               int children, int rooms,
               std::vector<std::pair<std::string, int>> bed_types,
-              std::map<int,Reservation> &reservations);
+              std::map<int, Reservation> &reservations, const Date &arrival,
+              const Date &departure);
 
   // Constructor for users with an account. Get that user's contact info.
   Reservation(ContactInfo reserving_guest, int adults, int children, int rooms,
               std::vector<std::pair<std::string, int>> bed_types,
-              std::map<int, Reservation> &reservations);
+              std::map<int, Reservation> &reservations, const Date &arrival,
+              const Date &departure);
 
   ContactInfo get_Primary_Guest() const { return _primary_guest; }
   void set_Primary_Guest(ContactInfo guest) { _primary_guest = guest; }
@@ -43,17 +45,22 @@ public:
   int get_Num_of_Adults() const { return _num_of_adults; }
   int get_Num_of_Children() const { return _num_of_children; }
   int get_Num_of_Rooms() const { return _num_of_rooms; }
-  std::vector<std::pair<std::string, int>> get_Bed_Types() const { return _bed_types; }
+  std::vector<std::pair<std::string, int>> get_Bed_Types() const {
+    return _bed_types;
+  }
   bool get_Fulfillment_Status() const { return _fulfillment_status; }
   Date get_Arrival() const { return _arrival; }
   Date get_Departure() const { return _departure; }
 
+  void set_Reservation_ID(int num) { _reservation_id = num; }
   void set_Num_of_Adults(int num) { _num_of_adults = num; }
   void set_Num_of_Children(int num) { _num_of_children = num; }
   void set_Num_of_Rooms(int num) { _num_of_rooms = num; }
-  void set_Bed_Types(std::vector<std::pair<std::string, int>> beds) { _bed_types = beds; }
+  void set_Bed_Types(std::vector<std::pair<std::string, int>> beds) {
+    _bed_types = beds;
+  }
   void set_Fulfillment_Status(bool status) { _fulfillment_status = status; }
-  void set_Dates(const Date& arr, const Date& dep) {
+  void set_Dates(const Date &arr, const Date &dep) {
     _arrival = arr;
     _departure = dep;
   }
@@ -71,10 +78,11 @@ public:
 
   // Leave reservation fulfillment to reservation class. Reservation objects
   // will pass their own ID numbers to the room that is put as the parameter.
-  bool fulfill_Reservation(Room& room);
+  bool fulfill_Reservation(Room &room);
 
 private:
-  int generate_Reservation_Id(std::map<int, Reservation> &reservations);
+  std::pair<int, Reservation>
+  generate_Reservation_Id(std::map<int, Reservation> &reservations);
   int _reservation_id;
   ContactInfo _primary_guest;
   int _num_of_adults;

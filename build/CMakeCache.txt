@@ -151,7 +151,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=crow_example
+CMAKE_PROJECT_NAME:STATIC=hotel
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -226,6 +226,15 @@ crow_example_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 crow_example_SOURCE_DIR:STATIC=/home/sam/CPSC362/CPSC362_Project
+
+//Value Computed by CMake
+hotel_BINARY_DIR:STATIC=/home/sam/CPSC362/CPSC362_Project/build
+
+//Value Computed by CMake
+hotel_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+hotel_SOURCE_DIR:STATIC=/home/sam/CPSC362/CPSC362_Project
 
 
 ########################

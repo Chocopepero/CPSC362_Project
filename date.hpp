@@ -1,8 +1,7 @@
 #pragma once
 
-#include <compare>
 #include <string>
-
+#include <compare>
 
 class Date {
 public:

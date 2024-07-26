@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named crow_example
+# Target rules for targets named hotel
 
 # Build rule for target.
-crow_example: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 crow_example
-.PHONY : crow_example
+hotel: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 hotel
+.PHONY : hotel
 
 # fast build rule for target.
-crow_example/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/build
-.PHONY : crow_example/fast
+hotel/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/build
+.PHONY : hotel/fast
 
 hotel_backend.o: hotel_backend.cpp.o
 .PHONY : hotel_backend.o
 
 # target to build an object file
 hotel_backend.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/hotel_backend.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/hotel_backend.cpp.o
 .PHONY : hotel_backend.cpp.o
 
 hotel_backend.i: hotel_backend.cpp.i
@@ -142,7 +142,7 @@ hotel_backend.i: hotel_backend.cpp.i
 
 # target to preprocess a source file
 hotel_backend.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/hotel_backend.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/hotel_backend.cpp.i
 .PHONY : hotel_backend.cpp.i
 
 hotel_backend.s: hotel_backend.cpp.s
@@ -150,7 +150,7 @@ hotel_backend.s: hotel_backend.cpp.s
 
 # target to generate assembly for a file
 hotel_backend.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/hotel_backend.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/hotel_backend.cpp.s
 .PHONY : hotel_backend.cpp.s
 
 main.o: main.cpp.o
@@ -158,7 +158,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -166,7 +166,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -174,7 +174,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 reservation.o: reservation.cpp.o
@@ -182,7 +182,7 @@ reservation.o: reservation.cpp.o
 
 # target to build an object file
 reservation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/reservation.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/reservation.cpp.o
 .PHONY : reservation.cpp.o
 
 reservation.i: reservation.cpp.i
@@ -190,7 +190,7 @@ reservation.i: reservation.cpp.i
 
 # target to preprocess a source file
 reservation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/reservation.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/reservation.cpp.i
 .PHONY : reservation.cpp.i
 
 reservation.s: reservation.cpp.s
@@ -198,7 +198,7 @@ reservation.s: reservation.cpp.s
 
 # target to generate assembly for a file
 reservation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/reservation.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/reservation.cpp.s
 .PHONY : reservation.cpp.s
 
 room.o: room.cpp.o
@@ -206,7 +206,7 @@ room.o: room.cpp.o
 
 # target to build an object file
 room.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/room.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/room.cpp.o
 .PHONY : room.cpp.o
 
 room.i: room.cpp.i
@@ -214,7 +214,7 @@ room.i: room.cpp.i
 
 # target to preprocess a source file
 room.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/room.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/room.cpp.i
 .PHONY : room.cpp.i
 
 room.s: room.cpp.s
@@ -222,7 +222,7 @@ room.s: room.cpp.s
 
 # target to generate assembly for a file
 room.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/room.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/room.cpp.s
 .PHONY : room.cpp.s
 
 room_db.o: room_db.cpp.o
@@ -230,7 +230,7 @@ room_db.o: room_db.cpp.o
 
 # target to build an object file
 room_db.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/room_db.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/room_db.cpp.o
 .PHONY : room_db.cpp.o
 
 room_db.i: room_db.cpp.i
@@ -238,7 +238,7 @@ room_db.i: room_db.cpp.i
 
 # target to preprocess a source file
 room_db.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/room_db.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/room_db.cpp.i
 .PHONY : room_db.cpp.i
 
 room_db.s: room_db.cpp.s
@@ -246,7 +246,7 @@ room_db.s: room_db.cpp.s
 
 # target to generate assembly for a file
 room_db.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/room_db.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/room_db.cpp.s
 .PHONY : room_db.cpp.s
 
 user.o: user.cpp.o
@@ -254,7 +254,7 @@ user.o: user.cpp.o
 
 # target to build an object file
 user.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/user.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/user.cpp.o
 .PHONY : user.cpp.o
 
 user.i: user.cpp.i
@@ -262,7 +262,7 @@ user.i: user.cpp.i
 
 # target to preprocess a source file
 user.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/user.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/user.cpp.i
 .PHONY : user.cpp.i
 
 user.s: user.cpp.s
@@ -270,7 +270,7 @@ user.s: user.cpp.s
 
 # target to generate assembly for a file
 user.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/user.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/user.cpp.s
 .PHONY : user.cpp.s
 
 user_db.o: user_db.cpp.o
@@ -278,7 +278,7 @@ user_db.o: user_db.cpp.o
 
 # target to build an object file
 user_db.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/user_db.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/user_db.cpp.o
 .PHONY : user_db.cpp.o
 
 user_db.i: user_db.cpp.i
@@ -286,7 +286,7 @@ user_db.i: user_db.cpp.i
 
 # target to preprocess a source file
 user_db.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/user_db.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/user_db.cpp.i
 .PHONY : user_db.cpp.i
 
 user_db.s: user_db.cpp.s
@@ -294,7 +294,7 @@ user_db.s: user_db.cpp.s
 
 # target to generate assembly for a file
 user_db.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crow_example.dir/build.make CMakeFiles/crow_example.dir/user_db.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hotel.dir/build.make CMakeFiles/hotel.dir/user_db.cpp.s
 .PHONY : user_db.cpp.s
 
 # Help Target
@@ -305,7 +305,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... crow_example"
+	@echo "... hotel"
 	@echo "... hotel_backend.o"
 	@echo "... hotel_backend.i"
 	@echo "... hotel_backend.s"

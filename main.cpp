@@ -8,9 +8,6 @@
 #include "user.hpp"
 #include "user_db.hpp"
 
-
-
-
 int main() {
   const std::string kFilename = "data/reservation_records.json";
   HotelBackend backend{kFilename};
@@ -33,9 +30,17 @@ int main() {
     }
   });
 
-  CROW_ROUTE(app, "/create")
-      .methods(crow::HTTPMethod::POST)(createUser);
+  CROW_ROUTE(app, "/create").methods(crow::HTTPMethod::POST)(createUser);
 
+  CROW_ROUTE(app, "/login").methods(crow::HTTPMethod::POST)(loginUser);
 
+  CROW_ROUTE(app, "/reserve")
+      .methods(crow::HTTPMethod::POST)(
+          [&backend](const crow::request &req, crow::response &res) {
+            createReservation(req, res, backend);
+          });
+
+  CROW_ROUTE(app, "/lookup").methods(crow::HTTPMethod::GET)([&backend](const crow::request &req, crow::response &res)
+                                                            { backend.getReservation(req, res); });
   app.port(18080).multithreaded().run();
 }
