@@ -1,12 +1,17 @@
 #pragma once
 
 #include <string>
+#include <compare>
 
 class Date {
 public:
-  Date(const std::string &month = "1", const std::string &day = "1",
-       const std::string &year = "1970")
+  Date( int month = 1, int day = 1,
+        int year = 1970)
       : _month{month}, _day{day}, _year{year} {}
+
+  int get_Month() const { return _month; }
+  int get_Day() const { return _day; }
+  int get_Year() const { return _year; }
 
   std::weak_ordering operator<=>(const Date &rhs) const noexcept {
     auto result = _year <=> rhs._year;
@@ -29,7 +34,7 @@ public:
   }
 
 private:
-  std::string _month;
-  std::string _day;
-  std::string _year;
+  int _month;
+  int _day;
+  int _year;
 };

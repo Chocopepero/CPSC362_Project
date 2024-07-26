@@ -85,6 +85,7 @@ bool UserDB::register_acc(const std::string &username,
   new_user.change_contact_info(new_info);
 
   std::ofstream user_file("data/UserDB.dat", std::ios_base::app);
+  std::cout << "Write to UserDB.dat";
   user_file << new_user;
 
   _email_to_username.insert({email, username});
