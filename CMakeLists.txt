@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(hotel main.cpp user.cpp reservation.cpp room.cpp room_db.cpp hotel_backend.cpp user_db.cpp)
 
 # Include directories for Crow
-target_include_directories(hotel PRIVATE /path/to/crow/include)
+target_include_directories(hotel PRIVATE /server_utils)
 
 # Link libraries (e.g., Boost)
 find_package(Boost REQUIRED)
