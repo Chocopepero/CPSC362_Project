@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20) # Specify a recent version of CMake
+cmake_minimum_required(VERSION 3.20)
 
 project(hotel)
 
@@ -12,6 +12,16 @@ add_executable(hotel main.cpp user.cpp reservation.cpp room.cpp room_db.cpp hote
 # Include directories for Crow
 target_include_directories(hotel PRIVATE /server_utils)
 
-# Link libraries (e.g., Boost)
+# Set the Boost root directory if it's not already set in the environment variables
+if(NOT DEFINED ENV{BOOST_ROOT})
+    set(BOOST_ROOT "C:/Program Files/boost_1_82_0/boost_1_82_0")
+endif()
+
+# Find Boost
 find_package(Boost REQUIRED)
+
+# Include the Boost headers
+target_include_directories(hotel PRIVATE ${Boost_INCLUDE_DIRS})
+
+# Link Boost libraries
 target_link_libraries(hotel Boost::boost)

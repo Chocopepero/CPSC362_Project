@@ -24,6 +24,7 @@ public:
   void getReservation(const crow::request &req, crow::response &res);
 
   // API Handler Functions
+  std::shared_ptr<Session> get_session(const crow::request& req);
   void getUserDetails(const crow::request &req, crow::response &res);
   void updateUsername(const crow::request &req, crow::response &res);
   void updateEmail(const crow::request &req, crow::response &res);

@@ -248,12 +248,24 @@ void HotelBackend::getReservation(const crow::request &req,
   }
   res.end();
 }
+// Get session function returning a pointer to the object sent through HTTP request
+std::shared_ptr<Session> HotelBackend::get_session(const crow::request& req) {
+    auto session_cookie = req.get_header_value("Cookie");
+    if (session_cookie.empty()) {
+        return nullptr;
+    }
+    auto session = Session::from_cookie(session_cookie);
+    if (!session->is_valid()) {
+        return nullptr;
+    }
+    return session;
+}
 
 // API handler functions implementation
 void HotelBackend::getUserDetails(const crow::request &req, crow::response &res) {
     auto &user_db = UserDB::instance();
     auto session = get_session(req);
-    if (!session) {
+    if (!req) {
         res.code = 401;
         res.write("Unauthorized");
         res.end();
