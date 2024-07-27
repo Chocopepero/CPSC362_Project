@@ -78,20 +78,22 @@ void loginUser(const crow::request &req, crow::response &res) {
     }
 
     // Log-in User
-    bool success = user_db.verify_login(username, password);
+    std::string name;
+    bool success = user_db.verify_login(username, password, name);
     if (!success) {
-      res.code = 500; // Internal Server Error
-      res.write("Failed to login user");
+      res.code = 401; // Unauthorized
+      res.write("Invalid username or password");
       res.end();
       return;
     }
+
     // Respond with success
-    res.code = 201; // Logged in
+    res.code = 200; // OK
     res.set_header("Content-Type", "application/json");
-    res.write(R"({"message": "User logged in successfully"})");
+    res.write(R"({"message": "User logged in successfully", "name": ")" + name + R"("})");
     res.end();
   } catch (const std::exception &e) {
-    std::cerr << "Error in createUser: " << e.what() << std::endl;
+    std::cerr << "Error in loginUser: " << e.what() << std::endl;
     res.code = 500; // Internal Server Error
     res.set_header("Content-Type", "application/json");
     res.write(R"({"error": "Server error: )" + std::string(e.what()) + R"("})");

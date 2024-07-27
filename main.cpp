@@ -42,5 +42,22 @@ int main() {
 
   CROW_ROUTE(app, "/lookup").methods(crow::HTTPMethod::GET)([&backend](const crow::request &req, crow::response &res)
                                                             { backend.getReservation(req, res); });
+
+  CROW_ROUTE(app, "/api/user").methods(crow::HTTPMethod::GET)([&backend](const crow::request &req, crow::response &res) {
+    backend.getUserDetails(req, res);
+  });
+  CROW_ROUTE(app, "/api/update-username").methods(crow::HTTPMethod::POST)([&backend](const crow::request &req, crow::response &res) {
+    backend.updateUsername(req, res);
+  });
+  CROW_ROUTE(app, "/api/update-email").methods(crow::HTTPMethod::POST)([&backend](const crow::request &req, crow::response &res) {
+    backend.updateEmail(req, res);
+  });
+  CROW_ROUTE(app, "/api/update-password").methods(crow::HTTPMethod::POST)([&backend](const crow::request &req, crow::response &res) {
+    backend.updatePassword(req, res);
+  });
+  CROW_ROUTE(app, "/api/cancel-reservation").methods(crow::HTTPMethod::POST)([&backend](const crow::request &req, crow::response &res) {
+    backend.cancelReservation(req, res);
+  });
+
   app.port(18080).multithreaded().run();
 }

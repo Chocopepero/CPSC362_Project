@@ -1,9 +1,7 @@
 #include "hotel_backend.hpp"
 #include "room_db.hpp"
-
-#include <filesystem>
-#include <fstream>
-
+#include "user_db.hpp"
+#include "server_utils/sessions.h"
 #include "server_utils/rapidjson/document.h"     // rapidjson's DOM-style API
 #include "server_utils/rapidjson/prettywriter.h" // for stringify JSON
 #include "server_utils/rapidjson/rapidjson.h"
@@ -20,9 +18,6 @@ void SerializeContactToJSON(
 
   writer->Key("_phone_number");
   writer->String(contact.getPhoneNumber().c_str());
-
-  // writer->Key("_address");
-  // writer->String(contact.getAddress().address_As_String().c_str());
 
   writer->EndObject();
 }
@@ -108,13 +103,7 @@ DeserializeVectorOfPairsFromJSON(const rapidjson::Value &json) {
 ContactInfo DeserializeContactFromJSON(const rapidjson::Value &json) {
   std::string name = json["_name"].GetString();
   std::string phoneNumber = json["_phone_number"].GetString();
-  // std::string addressString = json["_address"].GetString();
-
-  // std::stringstream ss(addressString);
-  // Address address{};
-  // ss >> address;
   ContactInfo contact{name, phoneNumber};
-  // contact.updateAddress(address);
 
   return contact;
 }
@@ -189,8 +178,6 @@ bool HotelBackend::AssignRoom(int res_id) {
   auto &room_db = RoomDatabase::instance();
   int open_room = room_db.first_open_room(bed_type);
 
-  // If the return value of first open room is 0, there is no open room or we
-  // failed to find one.
   if (!open_room) {
     return false;
   }
@@ -231,33 +218,28 @@ std::pair<bool, int> HotelBackend::CreateReservation(
 void HotelBackend::getReservation(const crow::request &req,
                                   crow::response &res) {
   try {
-    // Extract the reservation ID from the query parameters
     int id = std::stoi(req.url_params.get("id"));
 
-    // Fetch the reservation
     auto res_it = _reservation_record.find(id);
     if (res_it == _reservation_record.end()) {
-      res.code = 404; // Not Found
+      res.code = 404;
       res.write("Reservation not found");
       res.end();
       return;
     }
     const Reservation &reservation = res_it->second;
 
-    // Serialize the reservation to JSON
     rapidjson::StringBuffer s;
     rapidjson::Writer<rapidjson::StringBuffer> writer(s);
     SerializeReservationRecordToJSON(reservation, &writer);
 
-    // Set response code and content
-    res.code = 200; // OK
+    res.code = 200;
     res.set_header("Content-Type", "application/json");
     res.write(s.GetString());
     res.end();
 
   } catch (const std::exception &e) {
-    // Handle errors (e.g., invalid ID, missing reservation)
-    res.code = 400; // Bad Request
+    res.code = 400;
     res.set_header("Content-Type", "application/json");
     crow::json::wvalue error_response;
     error_response["error"] =
@@ -265,4 +247,190 @@ void HotelBackend::getReservation(const crow::request &req,
     res.write(error_response.dump());
   }
   res.end();
+}
+
+// API handler functions implementation
+void HotelBackend::getUserDetails(const crow::request &req, crow::response &res) {
+    auto &user_db = UserDB::instance();
+    auto session = get_session(req);
+    if (!session) {
+        res.code = 401;
+        res.write("Unauthorized");
+        res.end();
+        return;
+    }
+    std::string username = session->get_value("username");
+    User user = user_db.find_user(username);
+    if (!user) {
+        res.code = 404;
+        res.write("User not found");
+        res.end();
+        return;
+    }
+    rapidjson::StringBuffer s;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(s);
+    writer.StartObject();
+    writer.Key("username");
+    writer.String(user.get_username().c_str());
+    writer.Key("email");
+    writer.String(user.get_email().c_str());
+    writer.Key("contact_info");
+    writer.StartObject();
+    writer.Key("name");
+    writer.String(user.get_contact_info().getName().c_str());
+    writer.Key("phone_number");
+    writer.String(user.get_contact_info().getPhoneNumber().c_str());
+    writer.EndObject();
+    writer.Key("reservations");
+    writer.StartArray();
+    for (int res_id : user.get_reservations()) {
+        writer.Int(res_id);
+    }
+    writer.EndArray();
+    writer.EndObject();
+    res.set_header("Content-Type", "application/json");
+    res.write(s.GetString());
+    res.end();
+}
+
+void HotelBackend::updateUsername(const crow::request &req, crow::response &res) {
+    auto &user_db = UserDB::instance();
+    auto session = get_session(req);
+    if (!session) {
+        res.code = 401;
+        res.write("Unauthorized");
+        res.end();
+        return;
+    }
+    auto body = crow::json::load(req.body);
+    if (!body) {
+        res.code = 400;
+        res.write("Invalid JSON format");
+        res.end();
+        return;
+    }
+    std::string username = session->get_value("username");
+    std::string new_username = body["username"].s();
+    User user = user_db.find_user(username);
+    if (!user) {
+        res.code = 404;
+        res.write("User not found");
+        res.end();
+        return;
+    }
+    user.set_username(new_username);
+    user_db.update_user(user);
+    session->set_value("username", new_username);
+    res.code = 200;
+    res.write("Username updated successfully");
+    res.end();
+}
+
+void HotelBackend::updateEmail(const crow::request &req, crow::response &res) {
+    auto &user_db = UserDB::instance();
+    auto session = get_session(req);
+    if (!session) {
+        res.code = 401;
+        res.write("Unauthorized");
+        res.end();
+        return;
+    }
+    auto body = crow::json::load(req.body);
+    if (!body) {
+        res.code = 400;
+        res.write("Invalid JSON format");
+        res.end();
+        return;
+    }
+    std::string username = session->get_value("username");
+    std::string new_email = body["email"].s();
+    User user = user_db.find_user(username);
+    if (!user) {
+        res.code = 404;
+        res.write("User not found");
+        res.end();
+        return;
+    }
+    user.set_email(new_email);
+    user_db.update_user(user);
+    res.code = 200;
+    res.write("Email updated successfully");
+    res.end();
+}
+
+void HotelBackend::updatePassword(const crow::request &req, crow::response &res) {
+    auto &user_db = UserDB::instance();
+    auto session = get_session(req);
+    if (!session) {
+        res.code = 401;
+        res.write("Unauthorized");
+        res.end();
+        return;
+    }
+    auto body = crow::json::load(req.body);
+    if (!body) {
+        res.code = 400;
+        res.write("Invalid JSON format");
+        res.end();
+        return;
+    }
+    std::string username = session->get_value("username");
+    std::string new_password = body["password"].s();
+    User user = user_db.find_user(username);
+    if (!user) {
+        res.code = 404;
+        res.write("User not found");
+        res.end();
+        return;
+    }
+    user.set_password(new_password);
+    user_db.update_user(user);
+    res.code = 200;
+    res.write("Password updated successfully");
+    res.end();
+}
+
+void HotelBackend::cancelReservation(const crow::request &req, crow::response &res) {
+    auto &user_db = UserDB::instance();
+    auto session = get_session(req);
+    if (!session) {
+        res.code = 401;
+        res.write("Unauthorized");
+        res.end();
+        return;
+    }
+    auto body = crow::json::load(req.body);
+    if (!body) {
+        res.code = 400;
+        res.write("Invalid JSON format");
+        res.end();
+        return;
+    }
+    std::string username = session->get_value("username");
+    int reservation_id = body["reservationId"].i();
+    User user = user_db.find_user(username);
+    if (!user) {
+        res.code = 404;
+        res.write("User not found");
+        res.end();
+        return;
+    }
+    auto &backend = HotelBackend::instance();
+    Reservation reservation = backend.getReservationById(reservation_id);
+    if (!reservation) {
+        res.code = 404;
+        res.write("Reservation not found");
+        res.end();
+        return;
+    }
+    if (!user.Remove_Reservation(reservation)) {
+        res.code = 500;
+        res.write("Failed to cancel reservation");
+        res.end();
+        return;
+    }
+    backend.removeReservation(reservation_id);
+    res.code = 200;
+    res.write("Reservation cancelled successfully");
+    res.end();
 }
