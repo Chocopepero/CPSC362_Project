@@ -15,6 +15,7 @@ public:
   bool register_acc(const std::string &username, const std::string &password,
                     const std::string &email, const std::string &name,
                     const std::string &phone_num);
+  bool update_account(const std::string &username, const User &user);
 
 private:
   UserDB(const std::string &filename);

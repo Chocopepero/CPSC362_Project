@@ -79,7 +79,7 @@ void loginUser(const crow::request &req, crow::response &res) {
 
     // Log-in User
     std::string name;
-    bool success = user_db.verify_login(username, password, name);
+    bool success = user_db.verify_login(username, password);
     if (!success) {
       res.code = 401; // Unauthorized
       res.write("Invalid username or password");

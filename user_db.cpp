@@ -93,3 +93,10 @@ bool UserDB::register_acc(const std::string &username,
 
   return true;
 }
+
+bool UserDB::update_account(const std::string &new_username, const User &user){
+  _users.erase(user.get_username());
+  _users.insert({new_username, user});
+  _email_to_username.at(user.get_email()) = new_username;
+  return true;
+}

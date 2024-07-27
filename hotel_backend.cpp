@@ -1,6 +1,8 @@
 #include "hotel_backend.hpp"
 #include "room_db.hpp"
 #include "user_db.hpp"
+
+#include "server_utils/crow_all.h"
 #include "server_utils/sessions.h"
 #include "server_utils/rapidjson/document.h"     // rapidjson's DOM-style API
 #include "server_utils/rapidjson/prettywriter.h" // for stringify JSON
@@ -248,8 +250,14 @@ void HotelBackend::getReservation(const crow::request &req,
   }
   res.end();
 }
+
+using Session = crow::SessionMiddleware<crow::InMemoryStore>;
+crow::App<crow::CookieParser, Session> app{Session{
+    crow::InMemoryStore{} // Using in-memory store for session data
+}};
+
 // Get session function returning a pointer to the object sent through HTTP request
-std::shared_ptr<Session> HotelBackend::get_session(const crow::request& req) {
+std::shared_ptr<Session> get_session(const crow::request& req) {
     auto session_cookie = req.get_header_value("Cookie");
     if (session_cookie.empty()) {
         return nullptr;
@@ -265,20 +273,21 @@ std::shared_ptr<Session> HotelBackend::get_session(const crow::request& req) {
 void HotelBackend::getUserDetails(const crow::request &req, crow::response &res) {
     auto &user_db = UserDB::instance();
     auto session = get_session(req);
-    if (!req) {
+    if (!session) {
         res.code = 401;
         res.write("Unauthorized");
         res.end();
         return;
     }
     std::string username = session->get_value("username");
-    User user = user_db.find_user(username);
-    if (!user) {
+    User* user_ptr = user_db.find(username);
+    if (user_ptr == nullptr) {
         res.code = 404;
         res.write("User not found");
         res.end();
         return;
     }
+    User user = *user_ptr;
     rapidjson::StringBuffer s;
     rapidjson::Writer<rapidjson::StringBuffer> writer(s);
     writer.StartObject();
@@ -323,15 +332,14 @@ void HotelBackend::updateUsername(const crow::request &req, crow::response &res)
     }
     std::string username = session->get_value("username");
     std::string new_username = body["username"].s();
-    User user = user_db.find_user(username);
-    if (!user) {
+    User* user = user_db.find(username);
+    if (user == nullptr) {
         res.code = 404;
         res.write("User not found");
         res.end();
         return;
     }
-    user.set_username(new_username);
-    user_db.update_user(user);
+    user->set_username(new_username);
     session->set_value("username", new_username);
     res.code = 200;
     res.write("Username updated successfully");
@@ -356,15 +364,14 @@ void HotelBackend::updateEmail(const crow::request &req, crow::response &res) {
     }
     std::string username = session->get_value("username");
     std::string new_email = body["email"].s();
-    User user = user_db.find_user(username);
-    if (!user) {
+    User* user = user_db.find(username);
+    if (user == nullptr) {
         res.code = 404;
         res.write("User not found");
         res.end();
         return;
     }
-    user.set_email(new_email);
-    user_db.update_user(user);
+    user->set_email(new_email);
     res.code = 200;
     res.write("Email updated successfully");
     res.end();
@@ -388,15 +395,14 @@ void HotelBackend::updatePassword(const crow::request &req, crow::response &res)
     }
     std::string username = session->get_value("username");
     std::string new_password = body["password"].s();
-    User user = user_db.find_user(username);
-    if (!user) {
+    User* user = user_db.find(username);
+    if (user == nullptr) {
         res.code = 404;
         res.write("User not found");
         res.end();
         return;
     }
-    user.set_password(new_password);
-    user_db.update_user(user);
+    user->set_password(new_password);
     res.code = 200;
     res.write("Password updated successfully");
     res.end();
@@ -420,28 +426,28 @@ void HotelBackend::cancelReservation(const crow::request &req, crow::response &r
     }
     std::string username = session->get_value("username");
     int reservation_id = body["reservationId"].i();
-    User user = user_db.find_user(username);
-    if (!user) {
+    User* user = user_db.find(username);
+    if (user == nullptr) {
         res.code = 404;
         res.write("User not found");
         res.end();
         return;
     }
-    auto &backend = HotelBackend::instance();
-    Reservation reservation = backend.getReservationById(reservation_id);
-    if (!reservation) {
-        res.code = 404;
-        res.write("Reservation not found");
-        res.end();
-        return;
+    auto reservation = _reservation_record.find(reservation_id);
+    if (reservation != _reservation_record.end();)
+    {
+      res.code = 404;
+      res.write("Reservation not found");
+      res.end();
+      return;
     }
-    if (!user.Remove_Reservation(reservation)) {
+    if (!user.Remove_Reservation(reservation->second)) {
         res.code = 500;
         res.write("Failed to cancel reservation");
         res.end();
         return;
     }
-    backend.removeReservation(reservation_id);
+    _reservation_record.erase(reservation_id);
     res.code = 200;
     res.write("Reservation cancelled successfully");
     res.end();

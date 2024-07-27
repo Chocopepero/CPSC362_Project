@@ -5,6 +5,7 @@
 
 #include "reservation.hpp"
 #include "server_utils/crow_all.h"
+#include "server_utils/sessions.h"
 
 // Declaration of HotelBackend class
 class HotelBackend {
@@ -24,7 +25,6 @@ public:
   void getReservation(const crow::request &req, crow::response &res);
 
   // API Handler Functions
-  std::shared_ptr<Session> get_session(const crow::request& req);
   void getUserDetails(const crow::request &req, crow::response &res);
   void updateUsername(const crow::request &req, crow::response &res);
   void updateEmail(const crow::request &req, crow::response &res);
@@ -35,5 +35,3 @@ private:
   const std::string &_reservation_records_filepath;
   std::map<int, Reservation> _reservation_record;
 };
-
-#endif // API_HANDLERS_HPP
