@@ -1,13 +1,24 @@
 #pragma once
 
-#include <string>
 #include <compare>
+#include <string>
+#include <sstream>
 
 class Date {
 public:
-  Date( int month = 1, int day = 1,
-        int year = 1970)
+  Date(int month = 1, int day = 1, int year = 1970)
       : _month{month}, _day{day}, _year{year} {}
+
+  Date(const std::string &date) {
+    int year, month, day;
+    std::stringstream ss(date);
+    char delimiter;
+    ss >> year >> delimiter >> month >> delimiter >> day;
+
+    _year = year;
+    _month = month;
+    _day = day;
+  }
 
   int get_Month() const { return _month; }
   int get_Day() const { return _day; }

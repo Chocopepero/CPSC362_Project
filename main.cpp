@@ -30,17 +30,17 @@ int main() {
     }
   });
 
-  CROW_ROUTE(app, "/create").methods(crow::HTTPMethod::POST)(createUser);
+  CROW_ROUTE(app, "/api/create").methods(crow::HTTPMethod::POST)(createUser);
 
-  CROW_ROUTE(app, "/login").methods(crow::HTTPMethod::POST)(loginUser);
+  CROW_ROUTE(app, "/api/login").methods(crow::HTTPMethod::POST)(loginUser);
 
-  CROW_ROUTE(app, "/reserve")
+  CROW_ROUTE(app, "/api/reserve")
       .methods(crow::HTTPMethod::POST)(
           [&backend](const crow::request &req, crow::response &res) {
             createReservation(req, res, backend);
           });
 
-  CROW_ROUTE(app, "/lookup").methods(crow::HTTPMethod::GET)([&backend](const crow::request &req, crow::response &res)
+  CROW_ROUTE(app, "/api/lookup").methods(crow::HTTPMethod::GET)([&backend](const crow::request &req, crow::response &res)
                                                             { backend.getReservation(req, res); });
 
   CROW_ROUTE(app, "/api/user").methods(crow::HTTPMethod::GET)([&backend](const crow::request &req, crow::response &res) {

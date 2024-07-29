@@ -1,4 +1,5 @@
 #include "hotel_backend.hpp"
+#include "json_util.hpp"
 #include "server_utils/crow_all.h"
 #include "user_db.hpp"
 
@@ -90,7 +91,8 @@ void loginUser(const crow::request &req, crow::response &res) {
     // Respond with success
     res.code = 200; // OK
     res.set_header("Content-Type", "application/json");
-    res.write(R"({"message": "User logged in successfully", "name": ")" + name + R"("})");
+    res.write(R"({"message": "User logged in successfully", "name": ")" + name +
+              R"("})");
     res.end();
   } catch (const std::exception &e) {
     std::cerr << "Error in loginUser: " << e.what() << std::endl;
@@ -119,21 +121,18 @@ void createReservation(const crow::request &req, crow::response &res,
     int adults = body["adult"].i();
     int children = body["child"].i();
     int number = body["numberOfRooms"].i();
-    int arrivemon = body["startMonth"].i();
-    int arriveday = body["startDay"].i();
-    int arriveyear = body["startYear"].i();
-    int depmon = body["endMonth"].i();
-    int depday = body["endDay"].i();
-    int depyear = body["endYear"].i();
+    Date arrivalDate{body["startMonth"].i(), body["startDay"].i(),
+                     body["startYear"].i()};
+    Date departureDate{body["startMonth"].i(), body["startDay"].i(),
+                       body["startYear"].i()};
     std::string type = body["room"].s();
-    Date arrival{arrivemon,arriveday,arriveyear};
-    Date depart{depmon, depday, depyear};
 
     // Everything's required in HTML.
     // Too tired to validate inputs
 
-    std::pair<bool,int> result = backend.CreateReservation(name, phone, adults, children,
-                                             number, arrival, depart, type);
+    std::pair<bool, int> result =
+        backend.CreateReservation(name, phone, adults, children, number,
+                                  arrivalDate, departureDate, type);
     bool success = result.first;
     std::string id = std::to_string(result.second);
 
@@ -144,7 +143,7 @@ void createReservation(const crow::request &req, crow::response &res,
       return;
     }
     // Respond with success
-    res.code = 201; // Logged in
+    res.code = 201; // Reservation Success
     res.set_header("Content-Type", "application/json");
     res.write("{"
               "\"message\": \"Reservation created successfully!\","

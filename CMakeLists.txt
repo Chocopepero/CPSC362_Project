@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add the executable
-add_executable(hotel main.cpp user.cpp reservation.cpp room.cpp room_db.cpp hotel_backend.cpp user_db.cpp)
+add_executable(hotel main.cpp user.cpp reservation.cpp room.cpp room_db.cpp hotel_backend.cpp user_db.cpp json_util.cpp)
 
 # Include directories for Crow
 target_include_directories(hotel PRIVATE /server_utils)

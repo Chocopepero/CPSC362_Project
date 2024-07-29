@@ -25,10 +25,12 @@ Reservation::Reservation(ContactInfo reserving_guest, int adults, int children,
 Reservation::Reservation(int reservation_id, ContactInfo reserving_guest,
                          int adults, int children, int rooms,
                          std::vector<std::pair<std::string, int>> bed_types,
-                         bool fulfillmentStatus)
+                         bool fulfillmentStatus, const Date &arrival,
+                         const Date &departure)
     : _reservation_id{reservation_id}, _primary_guest(reserving_guest),
       _num_of_adults{adults}, _num_of_children{children}, _num_of_rooms{rooms},
-      _bed_types{bed_types}, _fulfillment_status{fulfillmentStatus} {};
+      _bed_types{bed_types}, _fulfillment_status{fulfillmentStatus},
+      _arrival{arrival}, _departure{departure} {};
 
 std::pair<int, Reservation>
 Reservation::generate_Reservation_Id(std::map<int, Reservation> &reservations) {

@@ -1,4 +1,5 @@
 #include "hotel_backend.hpp"
+#include "json_util.hpp"
 #include "room_db.hpp"
 #include "user_db.hpp"
 
@@ -10,121 +11,6 @@
 #include "server_utils/rapidjson/stringbuffer.h" // wrapper of C stream for prettywriter as output
 #include "server_utils/rapidjson/writer.h"
 
-void SerializeContactToJSON(
-    const ContactInfo &contact,
-    rapidjson::Writer<rapidjson::StringBuffer> *writer) {
-  writer->StartObject();
-
-  writer->Key("_name");
-  writer->String(contact.getName().c_str());
-
-  writer->Key("_phone_number");
-  writer->String(contact.getPhoneNumber().c_str());
-
-  writer->EndObject();
-}
-void SerializeDateToJSON(const Date &date,
-                         rapidjson::Writer<rapidjson::StringBuffer> *writer) {
-  writer->StartObject();
-  writer->Key("_year");
-  writer->Int(date.get_Year());
-
-  writer->Key("_month");
-  writer->Int(date.get_Month());
-
-  writer->Key("_day");
-  writer->Int(date.get_Day());
-
-  writer->EndObject();
-}
-
-void SerializeVectorOfPairsToJSON(
-    const std::vector<std::pair<std::string, int>> &vec,
-    rapidjson::Writer<rapidjson::StringBuffer> *writer) {
-  writer->StartArray();
-  for (const auto &pair : vec) {
-    writer->StartObject();
-
-    writer->Key("Type");
-    writer->String(pair.first.c_str());
-
-    writer->Key("Num");
-    writer->Int(pair.second);
-
-    writer->EndObject();
-  }
-  writer->EndArray();
-}
-
-void SerializeReservationRecordToJSON(
-    const Reservation &reservation,
-    rapidjson::Writer<rapidjson::StringBuffer> *writer) {
-  writer->StartObject();
-
-  writer->Key("_reservation_id");
-  writer->Int(reservation.get_Reservation_Id());
-
-  writer->Key("_primary_guest");
-  SerializeContactToJSON(reservation.get_Primary_Guest(), writer);
-
-  writer->Key("_num_of_adults");
-  writer->Int(reservation.get_Num_of_Adults());
-
-  writer->Key("_num_of_children");
-  writer->Int(reservation.get_Num_of_Children());
-
-  writer->Key("_num_of_rooms");
-  writer->Int(reservation.get_Num_of_Rooms());
-
-  writer->Key("_arrival");
-  SerializeDateToJSON(reservation.get_Arrival(), writer);
-
-  writer->Key("_departure");
-  SerializeDateToJSON(reservation.get_Departure(), writer);
-
-  writer->Key("_bed_types");
-  SerializeVectorOfPairsToJSON(reservation.get_Bed_Types(), writer);
-
-  writer->Key("_fulfillment_status");
-  writer->Bool(reservation.get_Fulfillment_Status());
-  writer->EndObject();
-}
-
-std::vector<std::pair<std::string, int>>
-DeserializeVectorOfPairsFromJSON(const rapidjson::Value &json) {
-  std::vector<std::pair<std::string, int>> vec;
-
-  for (auto &v : json.GetArray()) {
-    std::string type = v["Type"].GetString();
-    int num = v["Num"].GetInt();
-    vec.emplace_back(type, num);
-  }
-  return vec;
-}
-
-ContactInfo DeserializeContactFromJSON(const rapidjson::Value &json) {
-  std::string name = json["_name"].GetString();
-  std::string phoneNumber = json["_phone_number"].GetString();
-  ContactInfo contact{name, phoneNumber};
-
-  return contact;
-}
-
-Reservation DeserializeReservationFromJSON(const rapidjson::Value &json) {
-  int reservationId = json["_reservation_id"].GetInt();
-  ContactInfo primaryGuest = DeserializeContactFromJSON(json["_primary_guest"]);
-  int numOfAdults = json["_num_of_adults"].GetInt();
-  int numOfChildren = json["_num_of_children"].GetInt();
-  int numOfRooms = json["_num_of_rooms"].GetInt();
-  auto bedTypes = DeserializeVectorOfPairsFromJSON(json["_bed_types"]);
-  bool fulfillmentStatus = json["_fulfillment_status"].GetBool();
-
-  Reservation reservation(reservationId, primaryGuest, numOfAdults,
-                          numOfChildren, numOfRooms, bedTypes,
-                          fulfillmentStatus);
-
-  return reservation;
-}
 
 bool HotelBackend::WriteRecordsToJSONFile() const {
   std::ofstream records_file{_reservation_records_filepath};
@@ -256,30 +142,17 @@ crow::App<crow::CookieParser, Session> app{Session{
     crow::InMemoryStore{} // Using in-memory store for session data
 }};
 
-// Get session function returning a pointer to the object sent through HTTP request
-std::shared_ptr<Session> get_session(const crow::request& req) {
-    auto session_cookie = req.get_header_value("Cookie");
-    if (session_cookie.empty()) {
-        return nullptr;
-    }
-    auto session = Session::from_cookie(session_cookie);
-    if (!session->is_valid()) {
-        return nullptr;
-    }
-    return session;
-}
-
 // API handler functions implementation
 void HotelBackend::getUserDetails(const crow::request &req, crow::response &res) {
     auto &user_db = UserDB::instance();
-    auto session = get_session(req);
-    if (!session) {
-        res.code = 401;
-        res.write("Unauthorized");
-        res.end();
-        return;
+    auto session = app.get_context<Session>(req);
+    if (!session.get<bool>("authenticated", false)) {
+      res.code = 401;
+      res.write("Unauthorized");
+      res.end();
+      return;
     }
-    std::string username = session->get_value("username");
+    auto username = session.get<std::string>("username ", "");
     User* user_ptr = user_db.find(username);
     if (user_ptr == nullptr) {
         res.code = 404;
@@ -316,8 +189,8 @@ void HotelBackend::getUserDetails(const crow::request &req, crow::response &res)
 
 void HotelBackend::updateUsername(const crow::request &req, crow::response &res) {
     auto &user_db = UserDB::instance();
-    auto session = get_session(req);
-    if (!session) {
+        auto& session = app.get_context<Session>(req);
+    if (!session.get<bool>("authenticated", false)) {
         res.code = 401;
         res.write("Unauthorized");
         res.end();
@@ -330,7 +203,7 @@ void HotelBackend::updateUsername(const crow::request &req, crow::response &res)
         res.end();
         return;
     }
-    std::string username = session->get_value("username");
+    auto username = session.get<std::string>("username", "");
     std::string new_username = body["username"].s();
     User* user = user_db.find(username);
     if (user == nullptr) {
@@ -340,7 +213,7 @@ void HotelBackend::updateUsername(const crow::request &req, crow::response &res)
         return;
     }
     user->set_username(new_username);
-    session->set_value("username", new_username);
+    session.set("username", new_username);
     res.code = 200;
     res.write("Username updated successfully");
     res.end();
@@ -348,8 +221,8 @@ void HotelBackend::updateUsername(const crow::request &req, crow::response &res)
 
 void HotelBackend::updateEmail(const crow::request &req, crow::response &res) {
     auto &user_db = UserDB::instance();
-    auto session = get_session(req);
-    if (!session) {
+        auto& session = app.get_context<Session>(req);
+    if (!session.get<bool>("authenticated", false)) {
         res.code = 401;
         res.write("Unauthorized");
         res.end();
@@ -362,7 +235,7 @@ void HotelBackend::updateEmail(const crow::request &req, crow::response &res) {
         res.end();
         return;
     }
-    std::string username = session->get_value("username");
+    auto username = session.get<std::string>("username", "");
     std::string new_email = body["email"].s();
     User* user = user_db.find(username);
     if (user == nullptr) {
@@ -379,8 +252,8 @@ void HotelBackend::updateEmail(const crow::request &req, crow::response &res) {
 
 void HotelBackend::updatePassword(const crow::request &req, crow::response &res) {
     auto &user_db = UserDB::instance();
-    auto session = get_session(req);
-    if (!session) {
+        auto& session = app.get_context<Session>(req);
+    if (!session.get<bool>("authenticated", false)) {
         res.code = 401;
         res.write("Unauthorized");
         res.end();
@@ -393,7 +266,7 @@ void HotelBackend::updatePassword(const crow::request &req, crow::response &res)
         res.end();
         return;
     }
-    std::string username = session->get_value("username");
+    auto username = session.get<std::string>("username", "");
     std::string new_password = body["password"].s();
     User* user = user_db.find(username);
     if (user == nullptr) {
@@ -410,8 +283,8 @@ void HotelBackend::updatePassword(const crow::request &req, crow::response &res)
 
 void HotelBackend::cancelReservation(const crow::request &req, crow::response &res) {
     auto &user_db = UserDB::instance();
-    auto session = get_session(req);
-    if (!session) {
+        auto& session = app.get_context<Session>(req);
+    if (!session.get<bool>("authenticated", false)) {
         res.code = 401;
         res.write("Unauthorized");
         res.end();
@@ -424,7 +297,7 @@ void HotelBackend::cancelReservation(const crow::request &req, crow::response &r
         res.end();
         return;
     }
-    std::string username = session->get_value("username");
+    auto username = session.get<std::string>("username", "");
     int reservation_id = body["reservationId"].i();
     User* user = user_db.find(username);
     if (user == nullptr) {
@@ -434,14 +307,14 @@ void HotelBackend::cancelReservation(const crow::request &req, crow::response &r
         return;
     }
     auto reservation = _reservation_record.find(reservation_id);
-    if (reservation != _reservation_record.end();)
+    if (reservation != _reservation_record.end())
     {
       res.code = 404;
       res.write("Reservation not found");
       res.end();
       return;
     }
-    if (!user.Remove_Reservation(reservation->second)) {
+    if (!user->Remove_Reservation(reservation->second)) {
         res.code = 500;
         res.write("Failed to cancel reservation");
         res.end();
