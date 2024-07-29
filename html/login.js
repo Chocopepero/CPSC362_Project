@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             phone_num
         };
 
-        fetch('http://localhost:18080/create', {
+        fetch('http://localhost:18080/api/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             password
         };
 
-        fetch('http://localhost:18080/login', {
+        fetch('http://localhost:18080/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       phone
     };
 
-    fetch('http://localhost:18080/reserve', {
+    fetch('http://localhost:18080/api/reserve', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function fetchReservation(reservationId) {
-        fetch(`http://localhost:18080/lookup?id=${reservationId}`)
+        fetch(`http://localhost:18080/api/lookup?id=${reservationId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
