@@ -116,16 +116,14 @@ void createReservation(const crow::request &req, crow::response &res,
     }
 
     // Extract user details from JSON
+    Date arrivalDate{body["arrivalDate"].s()};
+    Date departureDate{body["departureDate"].s()};
     std::string name = body["name"].s();
+    int adults = body["numAdults"].i();
+    int children = body["numChildren"].i();
+    int number = body["numberRooms"].i();
     std::string phone = body["phone"].s();
-    int adults = body["adult"].i();
-    int children = body["child"].i();
-    int number = body["numberOfRooms"].i();
-    Date arrivalDate{body["startMonth"].i(), body["startDay"].i(),
-                     body["startYear"].i()};
-    Date departureDate{body["startMonth"].i(), body["startDay"].i(),
-                       body["startYear"].i()};
-    std::string type = body["room"].s();
+    std::string type = body["roomType"].s();
 
     // Everything's required in HTML.
     // Too tired to validate inputs

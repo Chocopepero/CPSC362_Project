@@ -10,18 +10,20 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(hotel main.cpp user.cpp reservation.cpp room.cpp room_db.cpp hotel_backend.cpp user_db.cpp json_util.cpp)
 
 # Include directories for Crow
-target_include_directories(hotel PRIVATE /server_utils)
+target_include_directories(hotel PRIVATE server_utils)
 
-# Set the Boost root directory if it's not already set in the environment variables
-if(NOT DEFINED ENV{BOOST_ROOT})
-    set(BOOST_ROOT "C:/Program Files/boost_1_82_0/boost_1_82_0")
-endif()
+# Specify the Boost root and library directories explicitly
+set(BOOST_ROOT "/usr/include/boost")
+set(BOOST_LIBRARYDIR "/usr/lib/x86_64-linux-gnu")
 
-# Find Boost
-find_package(Boost REQUIRED)
+# Find Boost (ensure system and ASIO components)
+find_package(Boost REQUIRED COMPONENTS system)
 
-# Include the Boost headers
-target_include_directories(hotel PRIVATE ${Boost_INCLUDE_DIRS})
+# Set the ASIO include directory manually
+set(ASIO_INCLUDE_DIR "/usr/include")
+
+# Include ASIO and Boost headers
+include_directories(${ASIO_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
 
 # Link Boost libraries
-target_link_libraries(hotel Boost::boost)
+target_link_libraries(hotel ${Boost_LIBRARIES})
